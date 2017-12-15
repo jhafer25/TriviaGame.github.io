@@ -105,16 +105,6 @@ $(document).ready(function() {
 						progressBarCounter = (counter/questionCounterTime)*100
 					}
 					$('#timerBar').attr('aria-valuenow', progressBarCounter).css('width',progressBarCounter+'%');
-					// $("#timeCounter").html(`
-					// 	<div class="row timerBar">
-					// 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-					// 			<div class="progress" id="heroHealthBar">
-			  //                      <div class="progress-bar" role="progressbar" style="width: ${progressBarCounter}%" aria-valuenow="${progressBarCounter}" aria-valuemin="0" aria-valuemax="100"></div>
-			  //                 	</div>
-			  //               </div>
-		   //              </div>
-					// `);
-					
 				}
 			}
 		},
@@ -158,7 +148,7 @@ $(document).ready(function() {
 					</div>
 				`;
 				$("#questionContainer").html(answerResponseHTML);
-				setTimeout(gameSetup.pauseForResponse, 8000);  //  change to 4000 or other amount
+				setTimeout(gameSetup.pauseForResponse, 8000);  
 			}
 		},
 
@@ -173,7 +163,7 @@ $(document).ready(function() {
 					</div>
 				`;
 				$("#questionContainer").html(answerResponseHTML);
-				setTimeout(gameSetup.pauseForResponse, 6000); //  change to 4000 or other amount
+				setTimeout(gameSetup.pauseForResponse, 6000); 
 			}
 		},
 
