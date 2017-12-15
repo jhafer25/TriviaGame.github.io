@@ -1,0 +1,22 @@
+#timeCounter{
+	margin: 1em;
+}
+body {
+     background: url(../images/woodImg.jpg) center center fixed;
+     -webkit-background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     background-size: cover;
+     color: #fff;
+}
+div.jumbotron{
+	background: url(../images/mustacheimg.jpg);
+	color: #000;
+}
+div.gameContainer{
+	background-color: #9E9B94;
+	opacity: 0.9;
+}
+li.answer{
+	color: #000;
+}
