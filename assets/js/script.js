@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function(){
 	$('#restartGame').hide();
 	let answerResponseHTML;
 	let counter = 0;
@@ -23,7 +23,8 @@ $(document).ready(function() {
 				],
 				correctAnswer: "Duke Silver",
 				correctAnswerImg: "./assets/images/dukeSilver.jpg",
-				answerHTML: `<ul class"list-group" id="answerList">`
+				answerHTML: `<ul class"list-group" id="answerList">`,
+				longPause: false
 			},
 			{
 				question: "According to Ron, what holiday is “a scam”?",
@@ -34,7 +35,8 @@ $(document).ready(function() {
 				],
 				correctAnswer: "Birthdays",
 				correctAnswerImg: "./assets/images/swansonBDay.jpg",
-				answerHTML: `<ul class"list-group answerList">`
+				answerHTML: `<ul class"list-group answerList">`,
+				longPause: true
 			},
 			{
 				question: "At what age did Ron start his first job?",
@@ -45,7 +47,8 @@ $(document).ready(function() {
 				],
 				correctAnswer: "9",
 				correctAnswerImg: "./assets/images/swansonJob.jpg",
-				answerHTML: `<ul class"list-group answerList">`
+				answerHTML: `<ul class"list-group answerList">`,
+				longPause: true
 			},
 			{
 				question: "What is Ron’s ringtone?",
@@ -56,7 +59,8 @@ $(document).ready(function() {
 				],
 				correctAnswer: "A gunshot",
 				correctAnswerImg: "./assets/images/swansonRingtone.gif",
-				answerHTML: `<ul class"list-group answerList">`
+				answerHTML: `<ul class"list-group answerList">`,
+				longPause: false
 			},
 			{
 				question: "What is the secret of Ron’s hamburger recipe?",
@@ -67,7 +71,8 @@ $(document).ready(function() {
 				],
 				correctAnswer: "A hamburger made out of meat on a bun with nothing.",
 				correctAnswerImg: "./assets/images/swansonBurger.jpg",
-				answerHTML: `<ul class"list-group answerList">`
+				answerHTML: `<ul class"list-group answerList">`,
+				longPause: false
 			}
 
 		],
@@ -91,7 +96,7 @@ $(document).ready(function() {
 			}
 		},
 
-		timer: function() {
+		timer: function(){
 			if(startGame){
 				theClock = setInterval(tenSeconds, 1000);
 				function tenSeconds(){
@@ -101,7 +106,6 @@ $(document).ready(function() {
 					}
 					else if(counter > 0){
 						counter--;
-						console.log(counter);
 						progressBarCounter = (counter/questionCounterTime)*100
 					}
 					$('#timerBar').attr('aria-valuenow', progressBarCounter).css('width',progressBarCounter+'%');
@@ -109,20 +113,20 @@ $(document).ready(function() {
 			}
 		},
 
-		pauseForResponse: function() {
+		pauseForResponse: function(){
 			if(startGame){
-				if (questionCounter < gameSetup.qaArray.length - 1) {
-				questionCounter++;
-				gameSetup.generateCurrentQuestionHTML();
-				counter = 10;
+				if(questionCounter < gameSetup.qaArray.length - 1){
+					questionCounter++;
+					gameSetup.generateCurrentQuestionHTML();
+					counter = 10;
 				}
-				else {
+				else{
 					gameSetup.gameOver();
 				}
 			}
 		},
 
-		outOfTime: function() {
+		outOfTime: function(){
 			if(startGame){
 				unansweredCount++;
 				$('#unansweredCount').html(unansweredCount);
@@ -137,7 +141,7 @@ $(document).ready(function() {
 			}
 		},
 
-	 	winner: function() {
+	 	winner: function(){
 	 		if(startGame){
 				correctCount++;
 				$('#correctCount').html(correctCount);
@@ -148,11 +152,16 @@ $(document).ready(function() {
 					</div>
 				`;
 				$("#questionContainer").html(answerResponseHTML);
-				setTimeout(gameSetup.pauseForResponse, 8000);  
+				if(gameSetup.qaArray[questionCounter].longPause){
+					setTimeout(gameSetup.pauseForResponse, 7000); 
+				}
+				else{
+					setTimeout(gameSetup.pauseForResponse, 4000);  
+				}
 			}
 		},
 
-	 	loser: function() {
+	 	loser: function(){
 	 		if(startGame){
 				incorrectCount++;
 				$('#incorrectCount').html(incorrectCount);
@@ -163,13 +172,11 @@ $(document).ready(function() {
 					</div>
 				`;
 				$("#questionContainer").html(answerResponseHTML);
-				setTimeout(gameSetup.pauseForResponse, 6000); 
+				setTimeout(gameSetup.pauseForResponse, 4000); 
 			}
 		},
 
-		
-
-		gameOver: function() {
+		gameOver: function(){
 			if(startGame){
 				if(correctCount > incorrectCount){
 					answerResponseHTML = `
@@ -187,11 +194,11 @@ $(document).ready(function() {
 						</div>
 					`;
 				}
-				$(".questionContainer").html(answerResponseHTML);
+				$("#questionContainer").html(answerResponseHTML);
 			}
 		},
 
-		restartGame: function() {
+		restartGame: function(){
 			if(startGame){
 				counter = 0;
 				questionCounterTime = 0;
@@ -228,11 +235,11 @@ $(document).ready(function() {
 		gameSetup.restartGame();
 	});
 	$("body").on("click", ".answer", function(event){
-		if($(this).text().trim() === gameSetup.qaArray[questionCounter].correctAnswer) {
+		if($(this).text().trim() === gameSetup.qaArray[questionCounter].correctAnswer){
 			clearInterval(theClock);
 			gameSetup.winner();
 		}
-		else {
+		else{
 			clearInterval(theClock);
 			gameSetup.loser();
 		}
